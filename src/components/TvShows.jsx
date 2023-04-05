@@ -3,7 +3,7 @@ import Movie from "./Movie";
 import { Spinner } from "react-bootstrap";
 import { useEffect, useState } from "react";
 
-const Home = props => {
+const TvShows = props => {
   const [Naruto, setNaruto] = useState([]);
   const [StarWars, setStarWars] = useState([]);
   const [OnePiece, setOnePiece] = useState([]);
@@ -109,4 +109,4 @@ const Home = props => {
   );
 };
 
-export default Home;
+export default TvShows;

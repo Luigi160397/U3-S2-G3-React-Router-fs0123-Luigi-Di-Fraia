@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ButtonGroup, Button, Dropdown, DropdownButton } from "react-bootstrap";
 
-const MyHeader = () => {
+const MyHeader = props => {
   const [genre, setGenre] = useState("Genres");
 
   const handleSelect = genre => {
@@ -11,7 +11,7 @@ const MyHeader = () => {
   return (
     <div className="genre-details mx-md-5 mt-2">
       <div className="d-flex">
-        <h3 className="text-light me-3 me-md-5">TV Shows</h3>
+        <h3 className="text-light me-3 me-md-5">{props.title}</h3>
         <DropdownButton
           className="genre-button"
           variant="outline-secondary text-white bg-transparent"

@@ -1,6 +1,7 @@
 import logo from "../assets/netflix_logo.png";
 import avatar from "../assets/avatar.png";
 import { Container, Dropdown, Nav, Navbar } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const MyNavbar = () => {
   return (
@@ -12,8 +13,12 @@ const MyNavbar = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#i">Home</Nav.Link>
-            <Nav.Link href="#i">Tv Shows</Nav.Link>
+            <Link className="nav-link" to="/">
+              Home
+            </Link>
+            <Link className="nav-link" to="/tv-shows">
+              Tv Shows
+            </Link>
             <Nav.Link href="#i">Movies</Nav.Link>
             <Nav.Link href="#i">Recently Added</Nav.Link>
             <Nav.Link href="#i">My List</Nav.Link>
@@ -54,14 +59,16 @@ const MyNavbar = () => {
               </Dropdown.Toggle>
 
               <Dropdown.Menu variant="dark">
-                <Dropdown.Item href="#/action-1">
+                <Link className="dropdown-item" to="/profile">
                   <div className="d-flex align-items-center">
                     <img src={avatar} id="avatar-small" alt="avatar-small" />
                     Epicoder #1
                   </div>
-                </Dropdown.Item>
+                </Link>
                 <Dropdown.Item href="#/action-2">Manage Profiles</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">Account</Dropdown.Item>
+                <Link className="dropdown-item" to="/account">
+                  Account
+                </Link>
                 <Dropdown.Item href="#/action-3">Help Center</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item href="#/action-4">Signout Netflix</Dropdown.Item>
