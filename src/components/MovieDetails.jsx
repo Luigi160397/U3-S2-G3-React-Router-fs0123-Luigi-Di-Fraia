@@ -46,9 +46,9 @@ const MovieDetails = () => {
       )}
 
       <Row className="justify-content-center gy-5">
-        <Col md={8}>
+        <Col md={8} className="order-2 order-md-1">
           <Row className="justify-content-center gy-5">
-            <Col md={10} className="text-center">
+            <Col md={10} className="text-center ">
               <h2 className="mt-3 display-3">{movie.Title}</h2>
               <p>{movie.Released}</p>
               <p>{movie.Genre}</p>
@@ -65,7 +65,7 @@ const MovieDetails = () => {
             </Col>
           </Row>
         </Col>
-        <Col md={4}>
+        <Col md={4} className="order-1 order-md-2 d-flex justify-content-center">
           <img src={movie.Poster} alt={movie.title} width={400} style={{ objectFit: "cover" }} />
         </Col>
       </Row>
