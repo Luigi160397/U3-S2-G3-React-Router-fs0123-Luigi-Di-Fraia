@@ -30,23 +30,26 @@ const CommentArea = props => {
   return (
     <>
       {comments.length > 0 ? (
-        <ListGroup className="mt-3">
-          {comments.map(comment => (
-            <ListGroup.Item className="bg-black text-white" key={comment._id}>
-              <Row>
-                <Col className="text-truncate" xs={12}>
-                  <strong>Autore:</strong> {comment.author}
-                </Col>
-                <Col xs={12}>
-                  <strong>Commento:</strong> {comment.comment}
-                </Col>
-                <Col xs={12}>
-                  <strong>Rate:</strong> <Badge bg="danger">{comment.rate}</Badge>
-                </Col>
-              </Row>
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
+        <>
+          <h5 className="display-6 text-white">Commenti:</h5>
+          <ListGroup className="mt-3">
+            {comments.map(comment => (
+              <ListGroup.Item className="bg-black text-white" key={comment._id}>
+                <Row>
+                  <Col className="text-truncate" xs={12}>
+                    <strong>Autore:</strong> {comment.author}
+                  </Col>
+                  <Col xs={12}>
+                    <strong>Commento:</strong> {comment.comment}
+                  </Col>
+                  <Col xs={12}>
+                    <strong>Rate:</strong> <Badge bg="danger">{comment.rate}</Badge>
+                  </Col>
+                </Row>
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        </>
       ) : (
         <h5 className="text-center">Non ci sono commenti per questo film.</h5>
       )}
