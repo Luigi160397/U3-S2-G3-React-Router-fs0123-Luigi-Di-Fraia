@@ -33,7 +33,7 @@ const MovieDetails = () => {
   }, [params.movieId]);
 
   return (
-    <Container fluid className="text-light">
+    <Container fluid className="text-light mt-5">
       {isLoading && !error && (
         <div className="text-center">
           <Spinner id="caricamento" variant="danger" animation="border" role="status">
