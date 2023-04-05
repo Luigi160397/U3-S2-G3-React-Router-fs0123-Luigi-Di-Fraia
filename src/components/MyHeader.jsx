@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ButtonGroup, Button, Dropdown, DropdownButton } from "react-bootstrap";
 
-function MyHeader() {
+const MyHeader = () => {
   const [genre, setGenre] = useState("Genres");
 
   const handleSelect = genre => {
@@ -63,6 +63,6 @@ function MyHeader() {
       </ButtonGroup>
     </div>
   );
-}
+};
 
 export default MyHeader;

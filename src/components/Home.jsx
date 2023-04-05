@@ -1,117 +1,112 @@
-import { Component } from "react";
 import MyHeader from "./MyHeader";
 import Movie from "./Movie";
 import { Spinner } from "react-bootstrap";
+import { useEffect, useState } from "react";
 
-class Home extends Component {
-  state = {
-    Naruto: [],
-    StarWars: [],
-    OnePiece: [],
-    error: false,
-    errorMsg: "",
-    isLoading: true
-  };
+const Home = () => {
+  const [Naruto, setNaruto] = useState([]);
+  const [StarWars, setStarWars] = useState([]);
+  const [OnePiece, setOnePiece] = useState([]);
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
-  request = async (endpoint, stato) => {
+  const request = async (endpoint, setStato) => {
     try {
       const response = await fetch(endpoint);
       if (response.ok) {
         const data = await response.json();
-        this.setState({ [stato]: data.Search, isLoading: false });
+        setStato(data.Search);
+        setIsLoading(false);
       } else {
-        this.setState({ error: true, isLoading: false });
+        setError(true);
+        setIsLoading(false);
       }
     } catch (error) {
-      this.setState({ error: true, errorMsg: error.message, isLoading: false });
+      setError(true);
+      setErrorMsg(error.message);
+      setIsLoading(false);
     }
   };
 
-  componentDidMount() {
-    this.request("http://www.omdbapi.com/?apikey=5f735187&s=naruto&type=movie", "Naruto");
-    this.request("https://www.omdbapi.com/?apikey=5f735187&s=star%20wars&type=movie", "StarWars");
-    this.request("https://www.omdbapi.com/?apikey=5f735187&s=one%20piece&type=movie", "OnePiece");
-  }
-  render() {
-    return (
-      <div className="container-fluid">
-        <MyHeader />
-        <div className="movie-gallery mx-md-5 mb-5 mt-4">
-          <h5 className="text-light mt-2 mb-2">Naruto</h5>
-          <div id="trending-now">
-            <div className="movie-row">
-              {this.state.isLoading && !this.state.error && (
-                <div className="text-center">
-                  <Spinner id="caricamento" variant="danger" animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </Spinner>
-                </div>
-              )}
-              {this.state.error && !this.state.isLoading && this.state.Naruto.length === 0 && (
-                <h5 className="text-center fw-bold text-light">
-                  {this.state.errorMsg ? this.state.errorMsg : "Errore nel reperire i dati"}
-                </h5>
-              )}
+  useEffect(() => {
+    request("http://www.omdbapi.com/?apikey=5f735187&s=naruto&type=movie", setNaruto);
+    request("https://www.omdbapi.com/?apikey=5f735187&s=star%20wars&type=movie", setStarWars);
+    request("https://www.omdbapi.com/?apikey=5f735187&s=one%20piece&type=movie", setOnePiece);
+  }, []);
 
-              <div className="row g-1 flex-nowrap movie-list py-2">
-                {this.state.Naruto.map(movie => (
-                  <Movie key={movie.imdbID} src={movie.Poster} alt={movie.Title} />
-                ))}
+  return (
+    <div className="container-fluid">
+      <MyHeader />
+      <div className="movie-gallery mx-md-5 mb-5 mt-4">
+        <h5 className="text-light mt-2 mb-2">Naruto</h5>
+        <div id="trending-now">
+          <div className="movie-row">
+            {isLoading && !error && (
+              <div className="text-center">
+                <Spinner id="caricamento" variant="danger" animation="border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
               </div>
-            </div>
-          </div>
-        </div>
-        <div className="movie-gallery mx-md-5 mb-5 mt-4">
-          <h5 className="text-light mt-2 mb-2">Star wars</h5>
-          <div id="trending-now">
-            <div className="movie-row">
-              {this.state.isLoading && !this.state.error && (
-                <div className="text-center">
-                  <Spinner id="caricamento" variant="danger" animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </Spinner>
-                </div>
-              )}
-              {this.state.error && !this.state.isLoading && this.state.StarWars.length === 0 && (
-                <h5 className="text-center fw-bold text-light">
-                  {this.state.errorMsg ? this.state.errorMsg : "Errore nel reperire i dati"}
-                </h5>
-              )}
-              <div className="row g-1 flex-nowrap movie-list py-2">
-                {this.state.StarWars.map(movie => (
-                  <Movie key={movie.imdbID} src={movie.Poster} alt={movie.Title} />
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="movie-gallery mx-md-5 mb-5 mt-4">
-          <h5 className="text-light mt-2 mb-2">Lord of the rings</h5>
-          <div id="trending-now">
-            <div className="movie-row">
-              {this.state.isLoading && !this.state.error && (
-                <div className="text-center">
-                  <Spinner id="caricamento" variant="danger" animation="border" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </Spinner>
-                </div>
-              )}
-              {this.state.error && !this.state.isLoading && this.state.OnePiece.length === 0 && (
-                <h5 className="text-center fw-bold text-light">
-                  {this.state.errorMsg ? this.state.errorMsg : "Errore nel reperire i dati"}
-                </h5>
-              )}
-              <div className="row g-1 flex-nowrap movie-list py-2">
-                {this.state.OnePiece.map(movie => (
-                  <Movie key={movie.imdbID} src={movie.Poster} alt={movie.Title} />
-                ))}
-              </div>
+            )}
+            {error && !isLoading && Naruto.length === 0 && (
+              <h5 className="text-center fw-bold text-light">{errorMsg ? errorMsg : "Errore nel reperire i dati"}</h5>
+            )}
+
+            <div className="row g-1 flex-nowrap movie-list py-2">
+              {Naruto.map(movie => (
+                <Movie key={movie.imdbID} src={movie.Poster} alt={movie.Title} />
+              ))}
             </div>
           </div>
         </div>
       </div>
-    );
-  }
-}
+      <div className="movie-gallery mx-md-5 mb-5 mt-4">
+        <h5 className="text-light mt-2 mb-2">Star wars</h5>
+        <div id="trending-now">
+          <div className="movie-row">
+            {isLoading && !error && (
+              <div className="text-center">
+                <Spinner id="caricamento" variant="danger" animation="border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </div>
+            )}
+            {error && !isLoading && StarWars.length === 0 && (
+              <h5 className="text-center fw-bold text-light">{errorMsg ? errorMsg : "Errore nel reperire i dati"}</h5>
+            )}
+            <div className="row g-1 flex-nowrap movie-list py-2">
+              {StarWars.map(movie => (
+                <Movie key={movie.imdbID} src={movie.Poster} alt={movie.Title} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="movie-gallery mx-md-5 mb-5 mt-4">
+        <h5 className="text-light mt-2 mb-2">Lord of the rings</h5>
+        <div id="trending-now">
+          <div className="movie-row">
+            {isLoading && !error && (
+              <div className="text-center">
+                <Spinner id="caricamento" variant="danger" animation="border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </div>
+            )}
+            {error && !isLoading && OnePiece.length === 0 && (
+              <h5 className="text-center fw-bold text-light">{errorMsg ? errorMsg : "Errore nel reperire i dati"}</h5>
+            )}
+            <div className="row g-1 flex-nowrap movie-list py-2">
+              {OnePiece.map(movie => (
+                <Movie key={movie.imdbID} src={movie.Poster} alt={movie.Title} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default Home;
