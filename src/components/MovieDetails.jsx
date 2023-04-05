@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Badge, Col, Container, Row, Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import CommentArea from "./CommentArea";
 
 const MovieDetails = () => {
   const params = useParams();
@@ -56,6 +57,9 @@ const MovieDetails = () => {
             </Badge>
           </p>
           <p>{movie.Plot}</p>
+        </Col>
+        <Col md={10}>
+          <CommentArea params={params.movieId} />
         </Col>
       </Row>
     </Container>
